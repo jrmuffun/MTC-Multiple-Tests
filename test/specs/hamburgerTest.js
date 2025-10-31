@@ -6,7 +6,6 @@ import {browser} from '@wdio/globals'
 
 describe('Hamburger Menu Buttons Test', () => {
     it('should have all buttons function as intended', async () => {
-        // NO EXPECTS HERE, MUST BE IN METHODS
         // Will need to login as a setup
         await Login.open();
         await Login.login("standard_user", "secret_sauce");

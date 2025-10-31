@@ -34,10 +34,12 @@ class Login extends Webpage {
     }
     async assertLoginPage(softAssertion) {
         if(softAssertion === true) {
+            // Assert both username and password input fields
             await expect.soft(this.usernameInput).toExist();
             await expect.soft(this.passwordInput).toExist();
         }
-        else{
+        else {
+            // Assert both username and password input fields
             await expect(this.usernameInput).toExist();
             await expect(this.passwordInput).toExist();
         }
