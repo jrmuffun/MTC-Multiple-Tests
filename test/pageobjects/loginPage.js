@@ -20,9 +20,9 @@ class Login extends Webpage {
         return $('h3[data-test="error"]')
     }
 
-    open(){
-        // Calling this function in case paths become useful later
-        return Webpage.open();
+    async open(){
+        // Calling this method in case paths become useful later
+        await Webpage.open();
     }
     async login(username, password) {
         // input username (variable)
@@ -31,6 +31,17 @@ class Login extends Webpage {
         await this.passwordInput.setValue(password);
         // Click login button
         await this.loginBttn.click();
+    }
+    async expectLoginPage(softAssertion) {
+        if(softAssertion === true) {
+            await expect.soft(this.usernameInput).toExist();
+            await expect.soft(this.passwordInput).toExist();
+        }
+        else{
+            await expect(this.usernameInput).toExist();
+            await expect(this.passwordInput).toExist();
+        }
+
     }
 }
 
