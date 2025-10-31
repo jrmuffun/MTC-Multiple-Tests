@@ -1,5 +1,5 @@
 import Webpage from '../pageobjects/url.js';
-import {$,$$,$x} from '@wdio/globals'
+import {$,$$,expect,browser} from '@wdio/globals'
 
 class ProductPage extends Webpage{
     get productTitle() {
@@ -20,8 +20,16 @@ class ProductPage extends Webpage{
         this.cartIcon.click();
     }
     async clickHamburgerMenu(option) {
-        await this.hamburgerMenu.click();
-        await this.hamburgerItems[option].click();
+        if(option === undefined) {
+            await this.hamburgerMenu.click();
+        }
+        else{
+            await this.hamburgerMenu.click();
+            await this.hamburgerItems[option].click();
+        }
+    }
+    async assertProductPage() {
+        await expect(this.productTitle).toExist();
     }
 }
 

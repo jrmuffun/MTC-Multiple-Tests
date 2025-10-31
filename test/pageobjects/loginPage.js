@@ -32,7 +32,7 @@ class Login extends Webpage {
         // Click login button
         await this.loginBttn.click();
     }
-    async expectLoginPage(softAssertion) {
+    async assertLoginPage(softAssertion) {
         if(softAssertion === true) {
             await expect.soft(this.usernameInput).toExist();
             await expect.soft(this.passwordInput).toExist();
