@@ -10,6 +10,9 @@ class CartPage extends Webpage{
         // Return title of the page
         return $('.title')
     }
+    get cartQuantity() {
+        return $('.shopping_cart_link')
+    }
 
     async assertCartPage(softAssertion) {
         if(softAssertion === true) {
@@ -20,6 +23,9 @@ class CartPage extends Webpage{
             // Assert that the cart title says "Your Cart"
             await expect(this.cartTitle).toHaveText("Your Cart")
         }
+    }
+    async assertCartQuantity(quantity) {
+        await expect(this.cartQuantity).toHaveText(quantity);
     }
 }
 

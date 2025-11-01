@@ -18,6 +18,9 @@ class ProductPage extends Webpage{
         // Get the items in the hamburger menu
         return $$('//nav[@class="bm-item-list"]/a')
     }
+    get productList() {
+        return $$('//div[@class="pricebar"]/button')
+    }
 
     async clickCart() {
         // Click the cart icon
@@ -38,6 +41,19 @@ class ProductPage extends Webpage{
     async assertProductPage() {
         // Assert the product title exists
         await expect(this.productTitle).toExist();
+    }
+    async addProducts(productNum) {
+        // Check if productNum is higher than 6, if true, throw an error
+        if(productNum > 5) {
+            throw new Error("addProducts parameter (productNum) cannot be higher than 6");
+        }
+        // Loop for each product, adding everything below it
+        while(productNum <= 5 && productNum >= 0) {
+            // Click the add to cart button for productNum (up to 6)
+            await this.productList[productNum].click();
+            // incriment productNum down 1
+            productNum--;
+        }
     }
 }
 
