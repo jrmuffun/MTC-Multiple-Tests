@@ -44,9 +44,11 @@ class ProductPage extends Webpage{
     }
     async addProducts(productNum) {
         // Check if productNum is higher than 6, if true, throw an error
-        if(productNum > 5) {
+        if(productNum > 6) {
             throw new Error("addProducts parameter (productNum) cannot be higher than 6");
         }
+        // Subtract 1 from productNum since indexing starts at 0
+        productNum--;
         // Loop for each product, adding everything below it
         while(productNum <= 5 && productNum >= 0) {
             // Click the add to cart button for productNum (up to 6)

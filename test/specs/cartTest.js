@@ -11,7 +11,7 @@ describe('Cart Add and Remove Items [MTQA-3807]', () => {
         await Login.open();
         await Login.login("standard_user","secret_sauce");
         // Add items to cart (probably all of them)
-        await ProductPage.addProducts(5);
+        await ProductPage.addProducts(6);
         // Assert cart icon number of items
         await CartPage.assertCartQuantity(6);
         // Click cart icon
@@ -20,12 +20,31 @@ describe('Cart Add and Remove Items [MTQA-3807]', () => {
         await CartPage.removeItems(4);
         // Assert cart icon quantity
         await CartPage.assertCartQuantity(2);
+        // Reload browser session for next test
+        await browser.reloadSession();
     })
 })
 
-describe('Cart Page Button Functionality [MTQA-3809]'), () => {
-    it('should have all buttons on the cart page working'), async () => {
+describe('Cart Page Button Functionality [MTQA-3809]', () => {
+    it('should have all buttons on the cart page working', async () => {
         // NO EXPECTS IN THIS FILE, MUST BE IN METHODS
-        
-    }
-}
+        // Login as setup
+        await Login.open();
+        await Login.login("standard_user","secret_sauce");
+        // Go to cart page
+        await ProductPage.clickCart();
+        // Click "Continue shopping" button
+        await CartPage.clickContinueShopping();
+        await ProductPage.assertProductPage();
+        // Add an item to cart (To test checkout)
+        await ProductPage.addProducts(2);
+        // Soft assert the cart quantity
+        await CartPage.assertCartQuantity(2,true);
+        // Click the cart icon
+        await ProductPage.clickCart();
+        // Click the checkout button
+        await CartPage.clickCheckout();
+        // Assert checkout page
+        await Webpage.assertUrl("https://www.saucedemo.com/checkout-step-one.html");
+    })
+})

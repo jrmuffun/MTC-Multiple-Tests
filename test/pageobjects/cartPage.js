@@ -1,4 +1,5 @@
 import Webpage from '../pageobjects/url.js';
+import LoginPage from './loginPage.js';
 import {$, $$} from '@wdio/globals'
 
 class CartPage extends Webpage{
@@ -16,6 +17,12 @@ class CartPage extends Webpage{
     get itemRemoveButton() {
         return $$('//button[contains(@id,"remove")]')
     }
+    get continueShoppingBttn() {
+        return $('#continue-shopping')
+    }
+    get checkoutBttn() {
+        return $('#checkout')
+    }
 
     async assertCartPage(softAssertion) {
         if(softAssertion === true) {
@@ -27,9 +34,14 @@ class CartPage extends Webpage{
             await expect(this.cartTitle).toHaveText("Your Cart")
         }
     }
-    async assertCartQuantity(quantity) {
+    async assertCartQuantity(quantity,softAssertion) {
         let cartNum = quantity.toString();
-        await expect(this.cartQuantity).toHaveText(cartNum);
+        if(softAssertion === true) {
+            await expect.soft(this.cartQuantity).toHaveText(cartNum);
+        }
+        else{
+            await expect(this.cartQuantity).toHaveText(cartNum);
+        }
     }
     async removeItems(quantity) {
         // If quantity is out of range, throw error
@@ -43,6 +55,12 @@ class CartPage extends Webpage{
             await this.itemRemoveButton[quantity].click();
             quantity--;
         }
+    }
+    async clickContinueShopping() {
+        await this.continueShoppingBttn.click();
+    }
+    async clickCheckout() {
+        await this.checkoutBttn.click();
     }
 }
 
