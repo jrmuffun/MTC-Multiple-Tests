@@ -1,5 +1,5 @@
 import Webpage from '../pageobjects/url.js';
-import {$} from '@wdio/globals'
+import {$, $$} from '@wdio/globals'
 
 class CartPage extends Webpage{
     get cartIcon() {
@@ -11,7 +11,10 @@ class CartPage extends Webpage{
         return $('.title')
     }
     get cartQuantity() {
-        return $('.shopping_cart_link')
+        return $('.shopping_cart_link > span')
+    }
+    get itemRemoveButton() {
+        return $$('//button[contains(@id,"remove")]')
     }
 
     async assertCartPage(softAssertion) {
@@ -25,7 +28,21 @@ class CartPage extends Webpage{
         }
     }
     async assertCartQuantity(quantity) {
-        await expect(this.cartQuantity).toHaveText(quantity);
+        let cartNum = quantity.toString();
+        await expect(this.cartQuantity).toHaveText(cartNum);
+    }
+    async removeItems(quantity) {
+        // If quantity is out of range, throw error
+        if(quantity > 5 || quantity < 0) {
+            throw new Error("removeItems: quantity cannot be larger than 5")
+        }
+        // Remove one from quantity so it reflects how many items to remove
+        quantity--;
+        // Loop removing each item for quantity
+        while(quantity < 5 && quantity >= 0) {
+            await this.itemRemoveButton[quantity].click();
+            quantity--;
+        }
     }
 }
 
