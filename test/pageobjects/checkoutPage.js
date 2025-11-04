@@ -6,7 +6,16 @@ class CheckoutPage extends Webpage {
         return $('.title')
     }
 
-    async assertCheckPg1() {
-        
+    async assertCheckPg1(softAssertion) {
+        // check if softAssertion is true, then run a soft assertion
+        if(softAssertion === true) {
+            await expect.soft(this.checkoutTitle).toExist();
+        }
+        // anything else, run normal expect
+        else{
+            await expect(this.checkoutTitle).toExist();
+        }
     }
 }
+
+export default new CheckoutPage();

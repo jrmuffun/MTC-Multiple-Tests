@@ -1,12 +1,11 @@
 import Login from '../pageobjects/loginPage.js';
 import ProductPage from '../pageobjects/productPage.js';
 import CartPage from '../pageobjects/cartPage.js';
-import Webpage from '../pageobjects/url.js'
+import CheckoutPage from '../pageobjects/checkoutPage.js';
 import {browser} from '@wdio/globals'
 
 describe('Cart Add and Remove Items [MTQA-3807]', () => {
     it('should be able to add and remove items from the cart', async () => {
-        // NO EXPECTS IN THIS FILE, MUST BE IN METHODS
         // Login as a setup
         await Login.open();
         await Login.login("standard_user","secret_sauce");
@@ -27,7 +26,6 @@ describe('Cart Add and Remove Items [MTQA-3807]', () => {
 
 describe('Cart Page Button Functionality [MTQA-3809]', () => {
     it('should have all buttons on the cart page working', async () => {
-        // NO EXPECTS IN THIS FILE, MUST BE IN METHODS
         // Login as setup
         await Login.open();
         await Login.login("standard_user","secret_sauce");
@@ -45,6 +43,6 @@ describe('Cart Page Button Functionality [MTQA-3809]', () => {
         // Click the checkout button
         await CartPage.clickCheckout();
         // Assert checkout page
-        await Webpage.assertUrl("https://www.saucedemo.com/checkout-step-one.html");
+        await CheckoutPage.assertCheckPg1();
     })
 })

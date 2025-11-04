@@ -12,9 +12,11 @@ class CartPage extends Webpage{
         return $('.title')
     }
     get cartQuantity() {
+        // return the span of the shopping cart link (which has text)
         return $('.shopping_cart_link > span')
     }
-    get itemRemoveButton() {
+    get itemRemoveBttn() {
+        // return all remove buttons in an array
         return $$('//button[contains(@id,"remove")]')
     }
     get continueShoppingBttn() {
@@ -35,10 +37,13 @@ class CartPage extends Webpage{
         }
     }
     async assertCartQuantity(quantity,softAssertion) {
+        // convert quantity to string, WDIO returns strings with toHaveText
         let cartNum = quantity.toString();
+        // Check if softAssertion is true, then return a soft assertion
         if(softAssertion === true) {
             await expect.soft(this.cartQuantity).toHaveText(cartNum);
         }
+        // Anything else, do a normal expect
         else{
             await expect(this.cartQuantity).toHaveText(cartNum);
         }
@@ -52,7 +57,7 @@ class CartPage extends Webpage{
         quantity--;
         // Loop removing each item for quantity
         while(quantity < 5 && quantity >= 0) {
-            await this.itemRemoveButton[quantity].click();
+            await this.itemRemoveBttn[quantity].click();
             quantity--;
         }
     }
