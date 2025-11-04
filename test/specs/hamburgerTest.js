@@ -9,7 +9,6 @@ describe('Hamburger Menu Buttons Test', () => {
         // Will need to login as a setup
         await Login.open();
         await Login.login("standard_user", "secret_sauce");
-        
         // Click on the cart icon and soft assert the page
         await ProductPage.clickCart();
         await CartPage.assertCartPage(true);
