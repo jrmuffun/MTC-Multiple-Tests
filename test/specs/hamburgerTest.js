@@ -4,27 +4,30 @@ import CartPage from '../pageobjects/cartPage.js';
 import Webpage from '../pageobjects/url.js'
 import {browser} from '@wdio/globals'
 
-describe('Hamburger Menu Buttons Test', () => {
-    it('should have all buttons function as intended', async () => {
-        // Will need to login as a setup
+describe('Hamburger Menu Buttons Test [MTQA-3804]', async () => {
+    beforeEach("Login as a setup", async () => {
         await Login.open();
         await Login.login("standard_user", "secret_sauce");
-        // Click on the cart icon and soft assert the page
+    })
+    it('should have the "All Items" button functioning', async () => {
         await ProductPage.clickCart();
         await CartPage.assertCartPage(true);
-        // Click on the hamburger menu (in method)
-        // Click "All Items" and assert product page
         await ProductPage.clickHamburgerMenu(0);
         await ProductPage.assertProductPage();
-        // Click Hamburger menu
-        // Click "About" and assert URL is saucelabs.com
+    })
+    it("should have the 'About' button functioning", async () => {
         await ProductPage.clickHamburgerMenu(1);
-        await Webpage.assertUrl("https://saucelabs.com/");
-        // Go back to product page
-        await browser.back();
-        await ProductPage.assertProductPage(true);
-        // Click "Logout" in hamburger menu and assert login page (with username/password fields)
+        await Webpage.assertUrl("https://saucelabs.com/")
+    })
+    it("should have the 'Logout' button functioning", async () => {
         await ProductPage.clickHamburgerMenu(2);
         await Login.assertLoginPage();
+    })
+    it("should have the 'Reset App State' button functioning", async () => {
+        await ProductPage.addProducts(2);
+        await CartPage.assertCartQuantity(2,true);
+        await ProductPage.clickHamburgerMenu(3);
+        await browser.refresh();
+        await CartPage.assertCartQuantity(0);
     })
 })

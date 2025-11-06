@@ -45,7 +45,12 @@ class CartPage extends Webpage{
         }
         // Anything else, do a normal expect
         else{
-            await expect(this.cartQuantity).toHaveText(cartNum);
+            if(cartNum == 0) {
+                await expect(this.cartQuantity).not.toExist();
+            }
+            else {
+                await expect(this.cartQuantity).toHaveText(cartNum);
+            }
         }
     }
     async removeItems(quantity) {
