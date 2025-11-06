@@ -5,49 +5,6 @@ import CheckoutPage from '../pageobjects/checkoutPage.js';
 import Webpage from '../pageobjects/url.js'
 // import {browser} from '@wdio/globals'
 
-// describe('Cart Add and Remove Items [MTQA-3807]', () => {
-//     it('should be able to add and remove items from the cart', async () => {
-//         // Login as a setup
-//         await Login.open();
-//         await Login.login("standard_user","secret_sauce");
-//         // Add items to cart (probably all of them)
-//         await ProductPage.addProducts(6);
-//         // Assert cart icon number of items
-//         await CartPage.assertCartQuantity(6);
-//         // Click cart icon
-//         await ProductPage.clickCart();
-//         // Remove items from cart (Probably like 4)
-//         await CartPage.removeItems(4);
-//         // Assert cart icon quantity
-//         await CartPage.assertCartQuantity(2);
-//         // Reload browser session for next test
-//         await browser.reloadSession();
-//     })
-// })
-
-// describe('Cart Page Button Functionality [MTQA-3809]', () => {
-//     it('should have all buttons on the cart page working', async () => {
-//         // Login as setup
-//         await Login.open();
-//         await Login.login("standard_user","secret_sauce");
-//         // Go to cart page
-//         await ProductPage.clickCart();
-//         // Click "Continue shopping" button
-//         await CartPage.clickContinueShopping();
-//         await ProductPage.assertProductPage();
-//         // Add an item to cart (To test checkout)
-//         await ProductPage.addProducts(2);
-//         // Soft assert the cart quantity
-//         await CartPage.assertCartQuantity(2,true);
-//         // Click the cart icon
-//         await ProductPage.clickCart();
-//         // Click the checkout button
-//         await CartPage.clickCheckout();
-//         // Assert checkout page
-//         await CheckoutPage.assertCheckPg1();
-//     })
-// })
-
 describe('Cart Add and Remove Items [MTQA-3807]', () => {
     beforeEach("Login as a setup", async () => {
         await Login.open();
@@ -81,16 +38,23 @@ describe("Cart Page Button Functionality [MTQA-3809]", () => {
         await Login.login("standard_user", "secret_sauce");
     })
     it("should have the 'Continue Shopping' button functioning", async () => {
+        // Click the cart icon
         await ProductPage.clickCart();
+        // Soft assert we are on the cart page
         await CartPage.assertCartPage(true);
+        // click continue shopping and assert we are on the product page
         await CartPage.clickContinueShopping();
         await ProductPage.assertProductPage();
     })
     it("should have the 'Checkout' button functioning", async () => {
+        // Add a product so we can click the checkout button
         await ProductPage.addProducts(1);
+        // soft assert the product got added
         await CartPage.assertCartQuantity(1,true);
+        // click the cart icon and click checkout
         await ProductPage.clickCart();
         await CartPage.clickCheckout();
+        // assert we are on the first checkout page
         await CheckoutPage.assertCheckPg1();
     })
 })
