@@ -9,4 +9,7 @@ export default class Webpage {
         // Assert that the page is on a given URL
         await expect(browser).toHaveUrl(link)
     }
+    static async clearLocalStorage() {
+        await browser.execute('window.localStorage.clear()');
+    }
 }
