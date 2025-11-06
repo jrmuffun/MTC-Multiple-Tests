@@ -3,7 +3,7 @@ import ProductPage from '../pageobjects/productPage.js';
 import CartPage from '../pageobjects/cartPage.js';
 import CheckoutPage from '../pageobjects/checkoutPage.js';
 import Webpage from '../pageobjects/url.js'
-import {browser} from '@wdio/globals'
+// import {browser} from '@wdio/globals'
 
 // describe('Cart Add and Remove Items [MTQA-3807]', () => {
 //     it('should be able to add and remove items from the cart', async () => {
@@ -62,7 +62,6 @@ describe('Cart Add and Remove Items [MTQA-3807]', () => {
         await Webpage.clearLocalStorage();
     })
     it("should be able to remove items from cart", async () => {
-        await browser.debug();
         // Add items to cart to be able to remove them
         await ProductPage.addProducts(6);
         // Soft assert cart icon number of items
@@ -76,9 +75,22 @@ describe('Cart Add and Remove Items [MTQA-3807]', () => {
     })
 })
 
-// describe("Cart Page Button Functionality [MTQA-3809]", () => {
-//     beforeEach("Login as a setup", async () => {
-//         await Login.open();
-//         await Login.login("standard_user", "secret_sauce");
-//     })
-// })
+describe("Cart Page Button Functionality [MTQA-3809]", () => {
+    beforeEach("Login as a setup", async () => {
+        await Login.open();
+        await Login.login("standard_user", "secret_sauce");
+    })
+    it("should have the 'Continue Shopping' button functioning", async () => {
+        await ProductPage.clickCart();
+        await CartPage.assertCartPage(true);
+        await CartPage.clickContinueShopping();
+        await ProductPage.assertProductPage();
+    })
+    it("should have the 'Checkout' button functioning", async () => {
+        await ProductPage.addProducts(1);
+        await CartPage.assertCartQuantity(1,true);
+        await ProductPage.clickCart();
+        await CartPage.clickCheckout();
+        await CheckoutPage.assertCheckPg1();
+    })
+})
