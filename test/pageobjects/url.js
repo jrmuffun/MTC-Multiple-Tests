@@ -7,7 +7,8 @@ export default class Webpage {
     }
     static async assertUrl(link) {
         // Assert that the page is on a given URL
-        await expect(browser).toHaveUrl(link)
+        const currentURL = await browser.url();
+        await expect(currentURL).toHaveUrl(link)
     }
     static async clearLocalStorage() {
         // Execute clearing local storage in browser
