@@ -58,13 +58,18 @@ describe("Cart Page Button Functionality [MTQA-3809]", () => {
         await CheckoutPage.assertCheckPg1();
     })
     it("should be able to click on a product to see its page", async () =>{
+        // Add 2 products to the cart
         await ProductPage.addProducts(2);
         await ProductPage.clickCart();
+        // Get the first item in the cart's name and store in a variable
         const currentCartItems = await CartPage.cartItems[0].getText();
+        // Click on the first item in the cart
         await CartPage.clickCartItem(1);
+        // Expect the item we are looking at to be the same as the one we clicked on
         await expect(ProductPage.itemTitle).toHaveText(currentCartItems);
     })
     afterEach("Clear localstorage and cookies", async () => {
+        // Clear local storage and delete cookies to quickly reset the app
         await Webpage.clearLocalStorage();
         await browser.deleteCookies();
     })
