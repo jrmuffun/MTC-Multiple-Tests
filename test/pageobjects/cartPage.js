@@ -61,13 +61,13 @@ class CartPage extends Webpage{
     }
     async removeItems(quantity) {
         // If quantity is out of range, throw error
-        if(quantity > 5 || quantity < 0) {
-            throw new Error("removeItems: quantity cannot be larger than 5")
+        if(quantity > 6 || quantity < 0) {
+            throw new Error("removeItems: quantity cannot be larger than 6")
         }
         // Remove one from quantity so it reflects how many items to remove
         quantity--;
         // Loop removing each item for quantity
-        while(quantity < 5 && quantity >= 0) {
+        while(quantity <= 5 && quantity >= 0) {
             await this.itemRemoveBttn[quantity].click();
             quantity--;
         }

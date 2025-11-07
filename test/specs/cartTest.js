@@ -26,9 +26,9 @@ describe('Cart Add and Remove Items [MTQA-3807]', () => {
         // Click cart icon
         await ProductPage.clickCart();
         // Remove items from cart
-        await CartPage.removeItems(4);
+        await CartPage.removeItems(6);
         // Assert cart icon quantity
-        await CartPage.assertCartQuantity(2);
+        await CartPage.assertCartQuantity(0);
     })
 })
 
