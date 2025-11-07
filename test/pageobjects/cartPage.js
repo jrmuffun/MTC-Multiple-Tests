@@ -25,6 +25,9 @@ class CartPage extends Webpage{
     get checkoutBttn() {
         return $('#checkout')
     }
+    get cartItems() {
+        return $$('//div[@data-test="inventory-item-name"]')
+    }
 
     async assertCartPage(softAssertion) {
         if(softAssertion === true) {
@@ -74,6 +77,10 @@ class CartPage extends Webpage{
     }
     async clickCheckout() {
         await this.checkoutBttn.click();
+    }
+    async clickCartItem(cartItem) {
+        cartItem--;
+        await this.cartItems[cartItem].click();
     }
 }
 

@@ -21,6 +21,9 @@ class ProductPage extends Webpage{
     get productList() {
         return $$('//div[@class="pricebar"]/button')
     }
+    get itemTitle() {
+        return $('div[data-test="inventory-item-name"]')
+    }
 
     async clickCart() {
         // Click the cart icon
