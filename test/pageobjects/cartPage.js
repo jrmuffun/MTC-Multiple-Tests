@@ -25,6 +25,9 @@ class CartPage extends Webpage{
     get checkoutBttn() {
         return $('#checkout')
     }
+    get cartItems() {
+        return $$('//div[@data-test="inventory-item-name"]')
+    }
 
     async assertCartPage(softAssertion) {
         if(softAssertion === true) {
@@ -39,18 +42,21 @@ class CartPage extends Webpage{
     async assertCartQuantity(quantity,softAssertion) {
         // convert quantity to string, WDIO returns strings with toHaveText
         let cartNum = quantity.toString();
+        // if cartNum is 0 and softAssertion is true, soft assert the element doesnt exist
+        if(cartNum == 0 && softAssertion === true) {
+            await expect.soft(this.cartQuantity).not.toExist();
+        }
+        // if cartNum is 0, assert the element doesnt exist
+        else if(cartNum == 0) {
+            await expect(this.cartQuantity).not.toExist();
+        }
         // Check if softAssertion is true, then return a soft assertion
-        if(softAssertion === true) {
+        else if(softAssertion === true) {
             await expect.soft(this.cartQuantity).toHaveText(cartNum);
         }
         // Anything else, do a normal expect
         else{
-            if(cartNum == 0) {
-                await expect(this.cartQuantity).not.toExist();
-            }
-            else {
-                await expect(this.cartQuantity).toHaveText(cartNum);
-            }
+            await expect(this.cartQuantity).toHaveText(cartNum);
         }
     }
     async removeItems(quantity) {
@@ -71,6 +77,10 @@ class CartPage extends Webpage{
     }
     async clickCheckout() {
         await this.checkoutBttn.click();
+    }
+    async clickCartItem(cartItem) {
+        cartItem--;
+        await this.cartItems[cartItem].click();
     }
 }
 

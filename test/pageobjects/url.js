@@ -9,4 +9,9 @@ export default class Webpage {
         // Assert that the page is on a given URL
         await expect(browser).toHaveUrl(link)
     }
+    static async clearLocalStorage() {
+        // Execute clearing local storage in browser
+        // This must be used once the page is loaded
+        await browser.execute('window.localStorage.clear()');
+    }
 }
